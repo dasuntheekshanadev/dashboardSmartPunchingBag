@@ -8,6 +8,7 @@ import { MdFitnessCenter } from 'react-icons/md';
 import { FiRefreshCw } from 'react-icons/fi';
 import fitnessImg from '../assets/onur-binay-HLyqe4smorI-unsplash(1).jpg';
 import Punching from '../assets/kkkk.jpg';
+import Stamina from './Stamina'; // Import Stamina component
 
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
@@ -92,6 +93,7 @@ const PunchingBagStats = () => {
               </div>
               <div className="flex items-center justify-between">
                 {/* Add stamina component here */}
+                <Stamina stamina={stamina} />
               </div>
             </div>
           </div>
@@ -125,6 +127,7 @@ const PunchingBagStats = () => {
               </div>
               <div className="flex items-center justify-between">
                 {/* Add stamina component here */}
+                <Stamina stamina={stamina} />
               </div>
             </div>
           </div>
