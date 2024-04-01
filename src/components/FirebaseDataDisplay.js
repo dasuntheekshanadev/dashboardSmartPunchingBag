@@ -115,6 +115,10 @@ const PunchingBagStats = () => {
                   <div className="text-lg text-white-700">{`Force by Min: ${pressure}`}</div>
                 </div>
                 <div className="flex items-center">
+                  <GiHeartOrgan className="text-xl text-red-500 mr-2" />
+                  <div className="text-lg text-white-700">{`Caleories Burnt by Min: ${pressure}`}</div>
+                </div>
+                <div className="flex items-center">
                   <FiRefreshCw className="text-xl text-gray-500 cursor-pointer hover:text-gray-700 mr-2" onClick={handleReset} />
                   <div className="text-lg text-gray-700 cursor-pointer hover:underline" onClick={handleReset}>Reset</div>
                 </div>
