@@ -2,7 +2,8 @@ import React from 'react';
 import { FiThermometer, FiAlertCircle, FiActivity } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
 import HealthBandStatus from './HealthBandStatus';
-import PunchingBagStatus from './PunchingBagStatus';
+import PunchDataComponent from './PunchingBagStatus';
+import FitnessStats from './FitnessStats';
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -31,7 +32,10 @@ const Dashboard = () => {
             <HealthBandStatus />
           </div>
           <div>
-            <PunchingBagStatus />
+            <PunchDataComponent />
+          </div>
+          <div>
+            <FitnessStats />
           </div>
         </div>
       </div>

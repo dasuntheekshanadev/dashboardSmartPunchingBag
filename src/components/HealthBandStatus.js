@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/database';
-import { FaTemperatureHigh, FaHeartbeat, FaLungs } from 'react-icons/fa'; // Importing icons from react-icons/fa
+import { FaTemperatureHigh, FaHeartbeat, FaLungs } from 'react-icons/fa';
 import firebaseConfig from '../config/firebaseConfig';
 
 // Initialize Firebase if not already initialized
@@ -36,28 +36,31 @@ const FirebaseDetailsComponent = () => {
   }, []);
 
   return (
-    <div className="bg-stone-800 rounded-lg shadow-lg p-6">
-      <h2 className="text-xl font-bold mb-4">Health Details</h2>
-      {details && (
-        <div>
-          <div className="flex items-center mb-2">
-            <FaTemperatureHigh className="text-blue-500 mr-2" />
-            <p className="text-white-700">Body Temperature: {details.DHT && details.DHT.temperature}</p>
+    <div className="max-w-xs bg-stone-800 rounded-lg shadow-lg p-6">
+      <img src="https://media.licdn.com/dms/image/C5112AQHKVALHNez1dA/article-cover_image-shrink_720_1280/0/1524341779139?e=2147483647&v=beta&t=InTu-mn4CGeg4jdgIw5N-2CRmPgHkmUiEpErQ-OgPdY" alt="Health Details" className="rounded-t-lg" />
+      <div className="p-4">
+        <h2 className="text-xl font-bold mb-4 text-white">Health Details</h2>
+        {details && (
+          <div>
+            <div className="flex items-center mb-2">
+              <FaTemperatureHigh className="text-blue-500 mr-2" />
+              <p className="text-white-700">Body Temperature: {details.DHT && details.DHT.temperature}</p>
+            </div>
+            <div className="flex items-center mb-2">
+              <FaHeartbeat className="text-red-500 mr-2" />
+              <p className="text-white-700">Heart Rate IR: {details.HeartRate && details.HeartRate.IR}</p>
+            </div>
+            <div className="flex items-center mb-2">
+              <FaHeartbeat className="text-red-500 mr-2" />
+              <p className="text-white-700">Heart Rate BPM: {details.HeartRate && details.HeartRate.BPM}</p>
+            </div>
+            <div className="flex items-center mb-2">
+              <FaLungs className="text-green-500 mr-2" />
+              <p className="text-white-700">Body Oxygen: {details.body && details.body.oxygen}</p>
+            </div>
           </div>
-          <div className="flex items-center mb-2">
-            <FaHeartbeat className="text-red-500 mr-2" />
-            <p className="text-white-700">Heart Rate IR: {details.HeartRate && details.HeartRate.IR}</p>
-          </div>
-          <div className="flex items-center mb-2">
-            <FaHeartbeat className="text-red-500 mr-2" />
-            <p className="text-white-700">Heart Rate BPM: {details.HeartRate && details.HeartRate.BPM}</p>
-          </div>
-          <div className="flex items-center mb-2">
-            <FaLungs className="text-green-500 mr-2" />
-            <p className="text-white-700">Body Oxygen: {details.body && details.body.oxygen}</p>
-          </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };

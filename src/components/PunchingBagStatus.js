@@ -1,36 +1,68 @@
-import React from 'react';
-import { GiHeartOrgan } from 'react-icons/gi';
-import { FiRefreshCw } from 'react-icons/fi';
-import Punching from '../assets/kkkk.jpg';
-import Stamina from './Stamina';
+import React, { useState, useEffect } from 'react';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/database';
+import { FaTachometerAlt, FaBolt } from 'react-icons/fa';
+import firebaseConfig from '../config/firebaseConfig';
 
-const PunchingBagStatus = ({ pressure, handleReset, stamina }) => {
+// Initialize Firebase if not already initialized
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
+
+const SmartPunchingBag = () => {
+  // State to hold punch data retrieved from Firebase
+  const [punchData, setPunchData] = useState(null);
+
+  useEffect(() => {
+    // Reference to Firebase Realtime Database
+    const dbRef = firebase.database().ref('punch');
+
+    // Function to fetch data from Firebase
+    const fetchData = async () => {
+      try {
+        // Fetch data once from Firebase
+        const snapshot = await dbRef.once('value');
+        // Extract data from snapshot
+        const data = snapshot.val();
+        // Update punchData state with fetched data
+        setPunchData(data);
+      } catch (error) {
+        console.error('Error fetching punch data from Firebase:', error);
+      }
+    };
+
+    fetchData(); // Call the fetch data function when component mounts
+
+    // Cleanup function to stop listening to changes when component unmounts
+    return () => {
+      dbRef.off(); // Stop listening to changes
+    };
+  }, []); // Dependency array to ensure effect runs only once after initial render
+
   return (
-    <div className="max-w-md w-full bg-blue-600 rounded-xl shadow-md overflow-hidden">
-      <div className="p-8">
-        <div className="text-3xl font-bold text-center text-white-600 mb-4">Punching Bag Status</div>
-        <div className="flex justify-center">
-          <img className="h-auto w-full object-cover" src={Punching} alt="Punching Bag" />
-        </div>
-        <div className="mt-8">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center">
-              <GiHeartOrgan className="text-xl text-red-500 mr-2" />
-              <div className="text-lg text-white-700">{`Pressure: ${pressure}`}</div>
+    <div className="max-w-xs bg-stone-800 rounded-lg shadow-lg p-6">
+      <img src="https://contents.mediadecathlon.com/p2420976/k$a538e5f56ce939fb34919280e76ceada/punching-bag-14-kg-red-outshock-8651245.jpg" alt="Smart Punching Bag" className="rounded-t-lg" />
+      <div className="p-4">
+        {/* Heading for the card */}
+        <h2 className="text-xl font-bold mb-4 text-white">Smart Punching Bag</h2>
+        {/* Render punch data if available */}
+        {punchData && (
+          <div>
+            {/* Display speed with an icon */}
+            <div className="flex items-center mb-2">
+              <FaTachometerAlt className="text-blue-500 mr-2" />
+              <p className="text-white">Speed: {punchData.speed}</p>
             </div>
-            {/* Add more status here */}
-            <div className="flex items-center">
-              <FiRefreshCw className="text-xl text-gray-500 cursor-pointer hover:text-gray-700 mr-2" onClick={handleReset} />
-              <div className="text-lg text-gray-700 cursor-pointer hover:underline" onClick={handleReset}>Reset</div>
+            {/* Display punching power with an icon */}
+            <div className="flex items-center mb-2">
+              <FaBolt className="text-yellow-500 mr-2" />
+              <p className="text-white">Punching Power: {punchData.power}</p>
             </div>
           </div>
-          <div className="flex items-center justify-between">
-            <Stamina stamina={stamina} />
-          </div>
-        </div>
+        )}
       </div>
     </div>
   );
 };
 
-export default PunchingBagStatus;
+export default SmartPunchingBag;
