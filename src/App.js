@@ -2,7 +2,6 @@ import './App.css';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import Home from './components/Home';
 import Dashboard from './components/Dashboard';
-import Data from './components/Data';
 import NavBar from './components/NavBar';
 import AboutUs from './components/AboutUs';
 import Footer from './components/Footer';

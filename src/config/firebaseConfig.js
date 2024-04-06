@@ -1,21 +1,20 @@
-// firebaseConfig.js
-const firebaseConfig = {
+  const firebaseConfig = {
 
-    apiKey: "AIzaSyBPRvJnTBI_SD_zameWeJ81noiqok_Fww0",
+    apiKey: "AIzaSyDtre2CpBgwMsFjC0yT2EQuwdP0Wib_T6w",
   
-    authDomain: "iotproj-ff1d9.firebaseapp.com",
+    authDomain: "smartpunchingbag-e8d74.firebaseapp.com",
   
-    databaseURL: "https://iotproj-ff1d9-default-rtdb.firebaseio.com",
+    databaseURL: "https://smartpunchingbag-e8d74-default-rtdb.firebaseio.com",
   
-    projectId: "iotproj-ff1d9",
+    projectId: "smartpunchingbag-e8d74",
   
-    storageBucket: "iotproj-ff1d9.appspot.com",
+    storageBucket: "smartpunchingbag-e8d74.appspot.com",
   
-    messagingSenderId: "955793061427",
+    messagingSenderId: "394790453748",
   
-    appId: "1:955793061427:web:97e6cb0558ec691261d546",
+    appId: "1:394790453748:web:e3dd4a4aa24cf6f0a879a1",
   
-    measurementId: "G-WFML50SB7G"
+    measurementId: "G-07PDR5QP70"
   
   };
   
