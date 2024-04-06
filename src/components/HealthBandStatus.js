@@ -35,6 +35,10 @@ const FirebaseDetailsComponent = () => {
     };
   }, []);
 
+  const handleReset = () => {
+    setDetails(null);
+  };
+
   return (
     <div className="max-w-xs bg-stone-800 rounded-lg shadow-lg p-6">
       <img src="https://media.licdn.com/dms/image/C5112AQHKVALHNez1dA/article-cover_image-shrink_720_1280/0/1524341779139?e=2147483647&v=beta&t=InTu-mn4CGeg4jdgIw5N-2CRmPgHkmUiEpErQ-OgPdY" alt="Health Details" className="rounded-t-lg" />
@@ -60,6 +64,7 @@ const FirebaseDetailsComponent = () => {
             </div>
           </div>
         )}
+        <button onClick={handleReset} className="bg-red-500 text-white font-bold py-2 px-4 rounded mt-4">Reset Values</button>
       </div>
     </div>
   );

@@ -39,6 +39,10 @@ const SmartPunchingBag = () => {
     };
   }, []); // Dependency array to ensure effect runs only once after initial render
 
+  const handleReset = () => {
+    setPunchData(null);
+  };
+
   return (
     <div className="max-w-xs bg-stone-800 rounded-lg shadow-lg p-6">
       <img src="https://contents.mediadecathlon.com/p2420976/k$a538e5f56ce939fb34919280e76ceada/punching-bag-14-kg-red-outshock-8651245.jpg" alt="Smart Punching Bag" className="rounded-t-lg" />
@@ -60,6 +64,8 @@ const SmartPunchingBag = () => {
             </div>
           </div>
         )}
+        {/* Reset button */}
+        <button onClick={handleReset} className="bg-red-500 text-white font-bold py-2 px-4 rounded mt-4">Reset Values</button>
       </div>
     </div>
   );

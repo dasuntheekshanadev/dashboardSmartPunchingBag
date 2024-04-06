@@ -38,6 +38,9 @@ const rateStamina = (lungCapacity, caloriesBurnt) => {
   // Convert combined factor to a 5-star rating (assuming range from 0 to 1)
   staminaRating = Math.round(combinedFactor * 5);
 
+  // Clamp staminaRating within the range of 0 to 5
+  staminaRating = Math.min(5, Math.max(0, staminaRating));
+
   return staminaRating;
 };
 
@@ -48,6 +51,7 @@ const FitnessStats = () => {
   const [mass, setMass] = useState(0);
   const [timer, setTimer] = useState(0);
   const [timerOver, setTimerOver] = useState(false); // State to track if the timer is over
+  const [timerAdjustment, setTimerAdjustment] = useState(0); // State to hold timer adjustment value
 
   useEffect(() => {
     // Fetch stamina data from Firebase
@@ -88,15 +92,20 @@ const FitnessStats = () => {
         setCaloriesBurnt(calculatedCaloriesBurnt);
       } else {
         clearInterval(interval);
-        // When timer is over, rate stamina based on lung capacity and calories burnt
-        const rating = rateStamina(lungCapacity, caloriesBurnt);
-        setStamina(rating);
         setTimerOver(true); // Set timerOver to true when the timer is over
       }
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [timer, mass, lungCapacity, caloriesBurnt]);
+  }, [timer, mass]);
+
+  useEffect(() => {
+    if (timerOver) {
+      // When timer is over, rate stamina based on lung capacity and calories burnt
+      const rating = rateStamina(lungCapacity, caloriesBurnt);
+      setStamina(rating);
+    }
+  }, [timerOver, lungCapacity, caloriesBurnt]);
 
   const handleStartTimer = () => {
     // Set timer to 60 seconds (adjust as needed)
@@ -104,8 +113,25 @@ const FitnessStats = () => {
     setTimerOver(false); // Reset timerOver when the timer starts
   };
 
+  const handleReset = () => {
+    setStamina(0);
+    setLungCapacity(0);
+    setCaloriesBurnt(0);
+    setMass(0);
+    setTimer(0);
+    setTimerOver(false);
+  };
+
+  const handleTimerAdjustmentChange = (e) => {
+    setTimerAdjustment(parseInt(e.target.value));
+  };
+
+  const handleTimerAdjustment = () => {
+    setTimer(timer + (timerAdjustment * 60)); // Convert minutes to seconds and adjust timer
+  };
+
   return (
-    <div className="container mx-auto p-4 bg-black text-white rounded-lg shadow-lg">
+    <div className="container mx-auto p-4 bg-stone-800 text-white rounded-lg shadow-lg">
       <img src="https://www.fitbase.com/blog/wp-content/uploads/2020/08/10-simple-tips-to-improve-your-running-stamina.jpg" alt="Running Stamina" className="w-48 h-auto mb-4 rounded-lg" />
       <div className="mb-4">
         <FaTachometerAlt className="inline mr-2" />
@@ -127,7 +153,7 @@ const FitnessStats = () => {
       </div>
       <div className="mb-4">
         <FaTachometerAlt className="inline mr-2" />
-        <span>Calories Burnt: {caloriesBurnt}</span>
+        <span>Calories Burnt: {timerOver ? caloriesBurnt : 'N/A'}</span>
       </div>
       <div className="mb-4">
         <label htmlFor="massInput">Enter Your Mass:</label>
@@ -139,7 +165,19 @@ const FitnessStats = () => {
           className="bg-black text-white border border-gray-400 p-1 rounded"
         />
       </div>
-      <button onClick={handleStartTimer} className="bg-gray-700 text-white py-1 px-4 rounded">Start Timer</button>
+      <div className="mb-4">
+        <label htmlFor="timerAdjustmentInput">Adjust Timer (minutes):</label>
+        <input
+          type="number"
+          id="timerAdjustmentInput"
+          value={timerAdjustment}
+          onChange={handleTimerAdjustmentChange}
+          className="bg-black text-white border border-gray-400 p-1 rounded"
+        />
+        <button onClick={handleTimerAdjustment} className="bg-gray-700 text-white py-1 px-4 rounded ml-2">Apply</button>
+      </div>
+      <button onClick={handleStartTimer} className="bg-gray-700 text-white py-1 px-4 rounded mr-2">Start Timer</button>
+      <button onClick={handleReset} className="bg-red-500 text-white py-1 px-4 rounded">Reset Values</button>
       <div>
         <FaTachometerAlt className="inline mr-2" />
         <span>Timer: {timer}</span>
